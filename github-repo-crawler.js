@@ -83,7 +83,7 @@
 			};
 			this._listeners[this.TYPE] = {};
 			this._listeners[this.EXTENSION] = {};
-			this._listeners[this.NAME] = {};
+			this._listeners[this.PATH] = {};
 			this.on = function(type, name, callback) {
 				var names = name.split(" ");
 				for (var i = 0; i < names.length; i ++) {
@@ -128,10 +128,11 @@
 				this.off(this.NAME, name, callback);
 			}
 
-			this.crawl = function(crawl) {
-				if (crawl == false) return;
+			this.crawl = function(callback) {
+
 				var _this = this;
 				function crawl(depth, url) {
+					var startedNewRequest = false;
 					ajaxGET({
 						url:url,
 						contentType:"application/vnd.github.v3+json",
@@ -139,8 +140,9 @@
 							ref:options.ref
 						},
 						success:function(response) {
+
 							var data = JSON.parse(response);
-							var i, j, type, extension, currentFile, fileOptions, fileData;
+							var i, j, type, extension, path, currentFile, fileOptions, fileData;
 							for (i = 0; i < data.length; i ++) {
 								currentFile = data[i];
 
@@ -186,10 +188,14 @@
 								if (fileOptions.stopCrawl) break;
 
 								if (type == "dir" && fileOptions.enterDirectory) {
+									startedNewRequest = true;
 									crawl(depth + 1, currentFile.url);
+
 								}
 							}
-
+							if (!startedNewRequest) {
+								callback();
+							}
 
 						},
 						error:function(response) {
@@ -201,6 +207,7 @@
 					})
 				}
 				crawl(0, `https://api.github.com/repos/${owner}/${name}/contents`);
+
 			}
 
 		}

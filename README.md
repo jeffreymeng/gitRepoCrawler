@@ -2,13 +2,11 @@
 A simple Javascript github repo crawler that traverses the github repo contents API.
 
 ### Installation
-You can grab a copy of the latest version from the [releases page](https://github.com/jeffreymeng/gitRepoCrawler/releases), or use
+You can grab a copy of the `github-repo-crawler.js` from the [releases page](https://github.com/jeffreymeng/gitRepoCrawler/releases), or use
 a cdn:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/jeffreymeng/gitRepoCrawler@1.0.0/github-repo-crawler.min.js"></script>
 ```
-### Usage Examples
-
 
 
 ### Documentation
@@ -28,15 +26,11 @@ var crawler = new GitHubRepoCrawler(owner, name, options?);
 If `owner` or `name` is in the optional parameter `options`, it will be ignored.
 ### API
 
-#### `.crawl(crawl?)`
+#### `.crawl(callback?)`
 Begins the crawl.
  
- The optional attribute `crawl` can be set to a boolean. If it's falsy the crawl will be cancelled.
-This is useful when you only want to crawl if a certain condition is met.
-```javascript
-crawler.crawl();  //crawls
-crawler.crawl(loggedIn); //crawls if loggedIn is true
-```
+ The optional attribute `callback` should contain a function to fun with the crawl is complete.
+
 
 #### `.on(type, value, listener)`
 Adds a listener.
@@ -111,6 +105,32 @@ A more readable way of typing `.off(crawler.PATH, value, listener)`.
 #### `._listeners`
 You can access the internal listeners here. It is not recommended to modify this.
 
+### Usage Examples
+
+Make a list of all javascript files in a repository
+```html
+<script>
+var crawler = new GitHubRepoCrawler("jeffreymeng", "gitRepoCrawler");
+
+crawler.onType("dir", function(dir) {
+	//skip the contents of folders named ignoreThisFolder
+	return {
+		enterDirectory:dir.path !== "ignoreThisFolder"
+	}
+});
+
+var files = [];
+var listener = function(file) {
+	files.push(file.path);
+};
+crawler.on(crawler.EXTENSION, "js", listener);
+
+crawler.crawl(function() {
+	console.log(files);
+});
+	
+</script>
+```
 
 ### License
 MIT License
