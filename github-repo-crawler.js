@@ -1,4 +1,4 @@
-/* Copyright (c) 2018 Jeffrey Meng | 1.0.0 | MIT License */
+/* Copyright (c) 2018 Jeffrey Meng | 1.1.2 | MIT License */
 (function(window) {
 	"use strict";
 
