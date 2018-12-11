@@ -29,7 +29,7 @@ If `owner` or `name` is in the optional parameter `options`, it will be ignored.
 #### `.crawl(callback?)`
 Begins the crawl.
  
- The optional attribute `callback` should contain a function to fun with the crawl is complete.
+ The optional attribute `callback` should contain a function to run when the crawl is complete.
 
 
 #### `.on(type, value, listener)`
