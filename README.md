@@ -5,7 +5,7 @@ A simple Javascript github repo crawler that traverses the github repo contents 
 You can grab a copy of the `github-repo-crawler.js` from the [releases page](https://github.com/jeffreymeng/gitRepoCrawler/releases), or use
 a cdn:
 ```html
-<script src="https://cdn.jsdelivr.net/gh/jeffreymeng/gitRepoCrawler@1./github-repo-crawler.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/jeffreymeng/gitRepoCrawler@1.1.2/github-repo-crawler.min.js"></script>
 ```
 
 
